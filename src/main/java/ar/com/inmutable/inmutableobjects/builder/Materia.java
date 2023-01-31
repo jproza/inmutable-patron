@@ -1,11 +1,11 @@
-package ar.com.inmutable.inmutableobjects;
+package ar.com.inmutable.inmutableobjects.builder;
 
-final public class Materia {
+final class Materia {
 
     private final String nombreMateria;
     private final Double calificacionAlumno;
 
-    public Materia(final String nombreMateria, final Double calificacionAlumno) {
+    Materia(final String nombreMateria, final Double calificacionAlumno) {
         super();
         this.nombreMateria = nombreMateria; //ya es inmutable por ser String
         this.calificacionAlumno = new Double(calificacionAlumno); //Copia defensiva

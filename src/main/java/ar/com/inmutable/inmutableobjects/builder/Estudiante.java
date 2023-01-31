@@ -1,4 +1,4 @@
-package ar.com.inmutable.inmutableobjects;
+package ar.com.inmutable.inmutableobjects.builder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-final public class Estudiante {
+final class Estudiante {
 
     private final String nombre;
 
@@ -23,7 +23,7 @@ final public class Estudiante {
     private final List<Materia> lstMaterias;
 
 
-    public Estudiante(final String nombre, final Integer edad, final Optional<LocalDate> fechaFinalizacion,
+    Estudiante(final String nombre, final Integer edad, final Optional<LocalDate> fechaFinalizacion,
                       final Integer materiasCursadas, final List<Materia> lstMaterias) {
         super();
         this.nombre = nombre; //string es inmmutable //Copia defensiva
