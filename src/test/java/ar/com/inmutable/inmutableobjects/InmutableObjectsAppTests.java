@@ -7,11 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InmutableObjectsAppTests {
 
@@ -45,6 +49,13 @@ public class InmutableObjectsAppTests {
             assertEquals(0, estudiante.getLstMaterias().size());
         });
     }
+    @Test
+    public void test_localdate_formatter_conditions() {
+          //System.out.println(estudiante.getFechaFinalizacion());
+        assertNotNull(estudiante.getFechaFinalizacion());
+        assertTrue(estudiante.getFechaFinalizacion().contains("-"));
+    }
+
 
 
 }

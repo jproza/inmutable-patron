@@ -4,6 +4,8 @@ import ar.com.inmutable.inmutableobjects.Estudiante;
 import ar.com.inmutable.inmutableobjects.Materia;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,11 @@ final public class EstudianteBuilder {
         this.nombre = nombre;
         this.edad = edad;
         this.materiasCursadas = materiasCursadas;
-        this.lstMaterias = lstMaterias;
+        if (lstMaterias == null) {
+            this.lstMaterias = Collections.unmodifiableList(new ArrayList<Materia>());
+        } else {
+            this.lstMaterias = lstMaterias;
+        }
     }
 
     public EstudianteBuilder fechaFinalizacion(LocalDate fecha) {
