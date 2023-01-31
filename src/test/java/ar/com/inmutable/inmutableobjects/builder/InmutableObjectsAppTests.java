@@ -26,15 +26,29 @@ public class InmutableObjectsAppTests {
     private EstudianteBuilder estudianteBuilder;
     private EstudianteBuilder estudianteClonBuilder;
 
+    private EstudianteBuilder estudianteSinMateriasCursadasBuilder;
+
+    private EstudianteBuilder estudianteIllegalStateBuilder;
+
+
+    private List<Materia> lstMaterias;
+
     @BeforeEach
     public void before() {
-        List collection = Collections.unmodifiableList(new ArrayList<>());
+        lstMaterias = new ArrayList<>();
+        lstMaterias.add(new MateriaBuilder("Matemática", 7.0).build());
+        List collection = Collections.unmodifiableList(lstMaterias);
         LocalDate ld = LocalDate.now();
         estudianteBuilder = new EstudianteBuilder("Javier", 41, 12, collection);
         estudianteBuilder.fechaFinalizacion(ld);
 
         estudianteClonBuilder = new EstudianteBuilder("Javier", 41, 12,collection);
         estudianteClonBuilder.fechaFinalizacion(ld);
+
+
+        estudianteSinMateriasCursadasBuilder = new EstudianteBuilder("Javier", 41, 0, null);
+        estudianteSinMateriasCursadasBuilder.fechaFinalizacion(ld);
+
 
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatterBuilder()
                 .appendPattern("dd-MMM")
@@ -53,10 +67,10 @@ public class InmutableObjectsAppTests {
     @Test
     public void test_unmodifiable_Collections_ExpectedException() {
         Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            assertEquals(0, estudianteBuilder.build().getLstMaterias().size());
+            assertEquals(1, estudianteBuilder.build().getLstMaterias().size());
             MateriaBuilder materiaBuilder = new MateriaBuilder("Matemática", 7.0);
             estudianteBuilder.build().getLstMaterias().add(materiaBuilder.build());
-            assertEquals(0, estudianteBuilder.build().getLstMaterias().size());
+            assertEquals(1, estudianteBuilder.build().getLstMaterias().size());
         });
     }
     @Test
@@ -79,7 +93,7 @@ public class InmutableObjectsAppTests {
 
     @Test
     public void test_formatter_pattern_conditions_REG_EXP_OK() {
-        EstudianteBuilder builder = new EstudianteBuilder("Ariel", 40 ,23,null);
+        EstudianteBuilder builder = new EstudianteBuilder("Ariel", 40 ,23,lstMaterias);
         builder.fechaFinalizacion(LocalDate.now());
         String[] fechaFinSplited = builder.build().getFechaFinalizacion().split("-");
         assertTrue(fechaFinSplited.length == 2);
@@ -88,7 +102,7 @@ public class InmutableObjectsAppTests {
 
     @Test
     public void test_formatter_pattern_OK() {
-            EstudianteBuilder builder = new EstudianteBuilder("Ariel", 40 ,23,null);
+            EstudianteBuilder builder = new EstudianteBuilder("Ariel", 40 ,23,lstMaterias);
             builder.fechaFinalizacion(LocalDate.now());
             String[] fechaFinSplited = builder.build().getFechaFinalizacion().split("-");
             assertTrue(fechaFinSplited.length == 2);
@@ -114,6 +128,19 @@ public class InmutableObjectsAppTests {
         assertEquals(estudianteClonBuilder.build().getEdad(), estudianteBuilder.build().getEdad());
     }
 
+    @Test
+    public void test_validation_Property_MateriasCursadas_OK() {
+           estudianteSinMateriasCursadasBuilder.build();
+    }
+
+
+    @Test
+    public void test_validation_Property_MateriasCursadas_ExpectedException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            estudianteIllegalStateBuilder = new EstudianteBuilder("Javier", 41, 1, null);
+            estudianteIllegalStateBuilder.build();
+        });
+    }
 
 
 

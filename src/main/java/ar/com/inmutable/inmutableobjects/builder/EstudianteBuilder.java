@@ -1,6 +1,8 @@
 package ar.com.inmutable.inmutableobjects.builder;
 
 
+import ar.com.inmutable.inmutableobjects.builder.utils.ValidatorUtils;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +26,16 @@ final public class EstudianteBuilder {
 
     public EstudianteBuilder(final String nombre, final Integer edad, final Integer materiasCursadas, final List<Materia> lstMaterias) {
         super();
+        if (ValidatorUtils.isEmpty(nombre)
+                || ValidatorUtils.isEmpty(edad)) {
+
+            throw new IllegalArgumentException();
+        }
+
+        if ((!ValidatorUtils.isEmpty(materiasCursadas) && materiasCursadas > 0) && ValidatorUtils.isEmpty(lstMaterias)) {
+            throw new IllegalArgumentException();
+        }
+
         this.nombre = nombre;
         this.edad = edad;
         this.materiasCursadas = materiasCursadas;

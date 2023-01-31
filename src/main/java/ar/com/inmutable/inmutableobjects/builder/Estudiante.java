@@ -1,5 +1,7 @@
 package ar.com.inmutable.inmutableobjects.builder;
 
+import ar.com.inmutable.inmutableobjects.builder.utils.ValidatorUtils;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -26,6 +28,16 @@ final class Estudiante {
     Estudiante(final String nombre, final Integer edad, final Optional<LocalDate> fechaFinalizacion,
                       final Integer materiasCursadas, final List<Materia> lstMaterias) {
         super();
+        if (ValidatorUtils.isEmpty(nombre)
+                || ValidatorUtils.isEmpty(edad)) {
+
+            throw new IllegalArgumentException();
+        }
+
+        if ((!ValidatorUtils.isEmpty(materiasCursadas) && materiasCursadas > 0) && ValidatorUtils.isEmpty(lstMaterias)) {
+            throw new IllegalArgumentException();
+        }
+
         this.nombre = nombre; //string es inmmutable //Copia defensiva
         this.edad = new Integer(edad); //Copia defensiva
         this.fechaFinalizacion = fechaFinalizacion; //default inmutable //Copia defensiva

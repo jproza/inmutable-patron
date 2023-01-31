@@ -1,5 +1,7 @@
 package ar.com.inmutable.inmutableobjects.builder;
 
+import ar.com.inmutable.inmutableobjects.builder.utils.ValidatorUtils;
+
 final class Materia {
 
     private final String nombreMateria;
@@ -7,6 +9,11 @@ final class Materia {
 
     Materia(final String nombreMateria, final Double calificacionAlumno) {
         super();
+
+        if (ValidatorUtils.isEmpty(nombreMateria) || ValidatorUtils.isEmpty(calificacionAlumno)) {
+            throw new IllegalArgumentException();
+        }
+
         this.nombreMateria = nombreMateria; //ya es inmutable por ser String
         this.calificacionAlumno = new Double(calificacionAlumno); //Copia defensiva
     }
