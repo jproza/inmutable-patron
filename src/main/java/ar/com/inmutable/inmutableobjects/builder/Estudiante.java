@@ -38,6 +38,10 @@ final class Estudiante {
             throw new IllegalArgumentException();
         }
 
+        if ((!ValidatorUtils.isEmpty(materiasCursadas) && materiasCursadas <= 0) && !ValidatorUtils.isEmpty(lstMaterias)) {
+            throw new IllegalArgumentException();
+        }
+
         this.nombre = nombre; //string es inmmutable //Copia defensiva
         this.edad = new Integer(edad); //Copia defensiva
         this.fechaFinalizacion = fechaFinalizacion; //default inmutable //Copia defensiva

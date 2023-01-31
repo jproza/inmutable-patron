@@ -36,6 +36,10 @@ final public class EstudianteBuilder {
             throw new IllegalArgumentException();
         }
 
+        if ((!ValidatorUtils.isEmpty(materiasCursadas) && materiasCursadas <= 0) && !ValidatorUtils.isEmpty(lstMaterias)) {
+            throw new IllegalArgumentException();
+        }
+
         this.nombre = nombre;
         this.edad = edad;
         this.materiasCursadas = materiasCursadas;

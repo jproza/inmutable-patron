@@ -143,5 +143,13 @@ public class InmutableObjectsAppTests {
     }
 
 
+    @Test
+    public void test_validation_Property_MateriasCursadas_ExpectedException_OK() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            estudianteIllegalStateBuilder = new EstudianteBuilder("Javier", 41, 0, lstMaterias);
+            estudianteIllegalStateBuilder.build();
+        });
+    }
+
 
 }
