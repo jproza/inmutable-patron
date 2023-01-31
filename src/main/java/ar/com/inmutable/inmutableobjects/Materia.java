@@ -7,7 +7,7 @@ final public class Materia {
 
     public Materia(final String nombreMateria, final Double calificacionAlumno) {
         super();
-        this.nombreMateria = nombreMateria;
+        this.nombreMateria = nombreMateria; //ya es inmutable por ser String
         this.calificacionAlumno = new Double(calificacionAlumno); //Copia defensiva
     }
 
