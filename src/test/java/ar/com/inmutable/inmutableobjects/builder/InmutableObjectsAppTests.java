@@ -1,6 +1,9 @@
 package ar.com.inmutable.inmutableobjects.builder;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
 import java.time.LocalDate;
@@ -17,14 +20,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class InmutableObjectsAppTests {
-
     private static EstudianteBuilder estudianteBuilder;
     private static EstudianteBuilder estudianteClonBuilder;
-
     private static EstudianteBuilder estudianteSinMateriasCursadasBuilder;
-
     private static EstudianteBuilder estudianteIllegalStateBuilder;
-
     private static List<Materia> lstMaterias;
 
     @BeforeAll
@@ -33,16 +32,15 @@ public class InmutableObjectsAppTests {
         lstMaterias.add(new MateriaBuilder("Matemática", 7.0).build());
         List collection = Collections.unmodifiableList(lstMaterias);
         LocalDate ld = LocalDate.now();
+
         estudianteBuilder = new EstudianteBuilder("Javier", 41, 12, collection);
         estudianteBuilder.fechaFinalizacion(ld);
 
         estudianteClonBuilder = new EstudianteBuilder("Javier", 41, 12, collection);
         estudianteClonBuilder.fechaFinalizacion(ld);
 
-
         estudianteSinMateriasCursadasBuilder = new EstudianteBuilder("Javier", 41, 0, null);
         estudianteSinMateriasCursadasBuilder.fechaFinalizacion(ld);
-
 
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatterBuilder()
                 .appendPattern("dd-MMM")
@@ -60,7 +58,6 @@ public class InmutableObjectsAppTests {
 
     @Test
     public void test_unmodifiable_Collections_ExpectedException() {
-
         assertAll("Grupo de evaluaciones para colecciones inmutables",
                 () -> assertEquals(1, estudianteBuilder.build().getLstMaterias().size()),
                 () -> {
@@ -71,7 +68,6 @@ public class InmutableObjectsAppTests {
                     });
                 }
         );
-
     }
 
     @Test
@@ -80,7 +76,6 @@ public class InmutableObjectsAppTests {
                 () -> assertNotNull(estudianteBuilder.build().getFechaFinalizacion()),
                 () -> assertTrue(estudianteBuilder.build().getFechaFinalizacion().contains("-")));
     }
-
 
     @Test
     public void test_formatter_pattern_with_Mock() {
@@ -91,7 +86,6 @@ public class InmutableObjectsAppTests {
             assertTrue(fechaFinSplited.length == 1);
         });
     }
-
 
     @Test
     public void test_formatter_pattern_conditions_REG_EXP_OK() {
@@ -110,7 +104,6 @@ public class InmutableObjectsAppTests {
         String[] fechaFinSplited = builder.build().getFechaFinalizacion().split("-");
         assertTrue(fechaFinSplited.length == 2);
     }
-
 
     @Test
     public void test_unmodifiable_Collections_Materias_ExpectedException() {
@@ -134,7 +127,6 @@ public class InmutableObjectsAppTests {
         estudianteSinMateriasCursadasBuilder.build();
     }
 
-
     @Test
     public void test_validation_Property_MateriasCursadas_ExpectedException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -142,7 +134,6 @@ public class InmutableObjectsAppTests {
             estudianteIllegalStateBuilder.build();
         });
     }
-
 
     @Test
     public void test_validation_Property_MateriasCursadas_ExpectedException_OK() {
@@ -152,7 +143,6 @@ public class InmutableObjectsAppTests {
         });
     }
 
-
     @AfterAll
     static void tearDown() {
         lstMaterias = null;
@@ -161,5 +151,4 @@ public class InmutableObjectsAppTests {
         estudianteSinMateriasCursadasBuilder = null;
         estudianteIllegalStateBuilder = null;
     }
-
 }
